@@ -27,7 +27,7 @@ services:
   x-ui:
     <<: *common
     container_name: x-ui
-    image: enwaiax/x-ui:beta
+    image: ${IMAGEXUI}
     restart: unless-stopped
     depends_on:
         - certbot
