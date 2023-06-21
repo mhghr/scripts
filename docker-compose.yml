@@ -29,8 +29,8 @@ services:
     container_name: x-ui
     image: ${IMAGEXUI}
     restart: unless-stopped
-    depends_on:
-        - certbot
+   # depends_on:
+   #     - certbot
     volumes:
         - ./volume/db/:/etc/x-ui
       #  - /etc/letsencrypt/:/etc/letsencrypt # Must mount the entire directory!
