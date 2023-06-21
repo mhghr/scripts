@@ -1,0 +1,37 @@
+version: '3.9'
+
+x-common:
+  &common
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "100m"
+      max-file: "3"
+
+services:
+
+  # SSL Certificate
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:v1.29.0
+    command: certonly --standalone --quiet -d ${DOMAIN} --agree-tos --email ${EMAIL}
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - .env
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt # Must mount the entire directory!
+
+  # X-UI Dashboard
+  x-ui:
+    <<: *common
+    container_name: x-ui
+    image: enwaiax/x-ui:beta
+    restart: unless-stopped
+    depends_on:
+        - certbot
+    volumes:
+        - ./volume/db/:/etc/x-ui
+        - /etc/letsencrypt/:/etc/letsencrypt # Must mount the entire directory!
+    network_mode: host
