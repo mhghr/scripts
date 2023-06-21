@@ -11,17 +11,17 @@ x-common:
 services:
 
   # SSL Certificate
-  certbot:
-    container_name: certbot
-    image: certbot/certbot:v1.29.0
-    command: certonly --standalone --quiet -d ${DOMAIN} --agree-tos --email ${EMAIL}
-    ports:
-      - 80:80
-      - 443:443
-    env_file:
-      - .env
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt # Must mount the entire directory!
+  #certbot:
+   # container_name: certbot
+   # image: certbot/certbot:v1.29.0
+   # command: certonly --standalone --quiet -d ${DOMAIN} --agree-tos --email ${EMAIL}
+   # ports:
+   #   - 80:80
+   #   - 443:443
+   # env_file:
+   #   - .env
+  #  volumes:
+    #  - /etc/letsencrypt:/etc/letsencrypt # Must mount the entire directory!
 
   # X-UI Dashboard
   x-ui:
@@ -33,5 +33,5 @@ services:
         - certbot
     volumes:
         - ./volume/db/:/etc/x-ui
-        - /etc/letsencrypt/:/etc/letsencrypt # Must mount the entire directory!
+      #  - /etc/letsencrypt/:/etc/letsencrypt # Must mount the entire directory!
     network_mode: host
